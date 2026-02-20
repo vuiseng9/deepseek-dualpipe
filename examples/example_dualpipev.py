@@ -107,6 +107,8 @@ def cal_diff(x: torch.Tensor, y: torch.Tensor) -> float:
 
 
 def main(rank, pp_size):
+    os.environ.setdefault("MASTER_ADDR", "localhost")
+    os.environ.setdefault("MASTER_PORT", "29500")
     is_first_rank = rank == 0
     dist.init_process_group(backend='nccl', init_method="env://", world_size=pp_size, rank=rank)
     torch.cuda.set_device(rank)
